@@ -1,4 +1,4 @@
-from forex_python.converter import CurrencyRates
+import forex_python.converter as converter
 import os
 import json
 
@@ -10,7 +10,7 @@ class CurrencyManager():
         self.output_c = self.get_always_currency_code(output_c)
         amount = float(amount)
         self.amount = amount
-        self.c = CurrencyRates()
+        self.c = converter.CurrencyRates()
 
     def convert(self):
         output_dict = dict()
@@ -46,9 +46,8 @@ class CurrencyManager():
         return {"input": input_dict, "output": output_dict}
 
     def get_always_currency_code(self, currency):
-        import forex_python.converter
         file_path = os.path.dirname(
-            os.path.abspath(forex_python.converter.__file__))
+            os.path.abspath(converter.__file__))
         with open(file_path + '/raw_data/currencies.json') as f:
             currencies_list = json.loads(f.read())
             for c in currencies_list:
